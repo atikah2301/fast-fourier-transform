@@ -36,16 +36,23 @@ Two polynomials, $A(x)$ and $B(x)$, and we want to find $C(x)=A(x)\cdot B(x)$
     
 - **Value representation**:
 
-    - Any $d+1$ points of a degree $d$ polynomial is sufficient to unique represent the polynomial. E.g. 3 points are enough to define a quadratic, 4 points define a cubic etc.
-    - ***Proof***: 
-        - $d+1$ points evaluated by the degree $d$ polynomial $P(x)$ gives us a system of $d+1$ equations, which we can represent as a matrix-vector product, $P=XC$.
-        - $P$ is the $(d+1)\times1$ vector of values that $P(x)$ is evaluated to at each point
-        - $X$ is $(d+1)\times (d+1)$ matrix where 
-            - row $i\in \{0,..,d\}$ is for the the $i$-th point 
-            - column $j\in \{0,..,d\}$ is the $x$ coordinate of the $j$-th point to the power of $j$ 
-        - $C$ is the $(d+1)\times1$ vector of coefficients of $P(x)$
-        - If each of the points chosen are unique, then $X$ will always be an invertible matrix. This is because the determinant of $X$ will be non-zero. ***(Proof required)***
-        - Therefore, there is a unique solution, $C$, to the matrix equation, and thus a unique polynomial that is described by the points.
+    **Theorem**: 
+
+    - Let $F$ be any field, let $n > 0$ be an integer, and let $x_0, ..., x_n$ be any $n+1$ distinct elements of $F$, and let $y_0,…,y_n$ be any elements of $F$, not necessarily distinct.  Then there is one and only one polynomial $f(x)$ over $F$ of degree at most $n$ such that $f(x_i)=y_i$ for $0 \le i \le n$.
+    - I.e. any polynomial degree $d$ defined over a field (rational, real, or complex numbers) can be uniquely represented by a set of least $d+1$ points. 
+
+    - ***Proof***:
+
+        - **Existence** -  Consider the polynomial $f(x)=\sum_{i=0}^n d_i \prod_{j\ne i}(x-a_j)$.  It is easy to see how to find the unique values for $d_0,\ldots,d_n$ for which $f(x)$ has the required property.  (Supply detail.)  
+
+        - **Uniqueness** - It suffices to prove that if $f(a_i)=0$ for all $i$, where $f(x)$ has degree at most $n$, then $f$ is the zero polynomial.
+
+            So suppose that $f(x)$ has this vanishing property, and that $f(x)$ has degree $m\le n$.  If $m=0$ then $f(x)$ is constant, and this constant must be zero, as required
+
+            So suppose that $m>0$, and let $f(x)=(x-a_n)g(x)+c$ where $g(x)$ has degree $m-1<n$.  Clearly $c=0$, and $g(a_i)=0$ for $0\le i\le n-1$.  By induction on $n$ it follows that $g$ is the zero polynomial, as required. 
+
+            Q.E.D.
+
     - Using this representation for multiplication, say polynomial $A(x)$ and $B(x)$ both have degree $d$. Then, their product $C(x)$ must have degree $d^2$, so it can be described by $d^2+1$ unique points.
     - We can simply choose any $d^2+1$ values of $x$, evaluate $A(x_i)$ and $B(x_i)$ at these values, and multiply them together to get $A(x_i)\cdot B(x_i)= C(x_i)$. Then, we have $d^2+1$ points in the form $\{(x_0,C(x_0)),...,(x_{d^2}, C(x_{d^2}))\}$, which represents our polynomial product. 
     - The complexity of this algorithm is only $O(d)$, therefore it is more efficient than distributive multiplication.
