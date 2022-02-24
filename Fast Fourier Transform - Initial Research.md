@@ -36,25 +36,44 @@ Two polynomials, $A(x)$ and $B(x)$, and we want to find $C(x)=A(x)\cdot B(x)$
     
 - **Value representation**:
 
-    **Theorem**: 
+    **Theorem** - **polynomial interpolation**: 
 
-    - Let $F$ be any field, let $n > 0$ be an integer, and let $x_0, ..., x_n$ be any $n+1$ distinct elements of $F$, and let $y_0,…,y_n$ be any elements of $F$, not necessarily distinct.  Then there is one and only one polynomial $f(x)$ over $F$ of degree at most $n$ such that $f(x_i)=y_i$ for $0 \le i \le n$.
-    - I.e. any polynomial degree $d$ defined over a field (rational, real, or complex numbers) can be uniquely represented by a set of least $d+1$ points. 
-
+    - Let $F$ be any field.
+    
+    - Let $n > 0$ be an integer, and let $a_0, ...,a_n$ be any $n+1$ distinct elements of $F$.
+    
+    - Let $b_0,…,b_n$ be any elements of $F$, not necessarily distinct.  
+    
+    - Then, there is one and only one polynomial $f(x)$ over $F$ of degree at most $n$ such that $f(a_i)=b_i$ for $0 \le i \le n$.
+    
+    - I.e. any polynomial degree $n$ defined over a field (rational, real, or complex numbers) can be uniquely represented by a set of least $n+1$ points. 
+    
     - ***Proof***:
-
-        - **Existence** -  Consider the polynomial $f(x)=\sum_{i=0}^n d_i \prod_{j\ne i}(x-a_j)$.  It is easy to see how to find the unique values for $d_0,\ldots,d_n$ for which $f(x)$ has the required property.  (Supply detail.)  
-
+    
+        - **Existence** -  To prove the existence of such a polynomial, there must exist $c_0,..,c_n$ such that $f(x)=\sum_{i=0}^{n}c_ix^i$. By evaluating $f(x)$ at each $a_0,..,a_n$ value, we get a system of equations, each of the form $f(a_i)=\sum_{i=0}^{n}c_ia_i^i=b_i$. Since there are $n+1$ equations and $n+1$ terms in each equation, 
+    
+            
+    
+        - Consider the Newton Interpolation Polynomial, $f(x)=\sum_{i=0}^n c_i \prod_{j\ne i}(x-a_j)$, equivalently, $f(x)=c_0+c_1(x-a_0)+c_2(x-a_0)(x-a_1)+...+c_n(x-a_0)..(x-a_{n-1})$
+    
+        - The coefficients can be easily found using quotients of differences. We can start by observing that $f(a_0)=c_0=b_0$. So $f(a_1)=b_0+c_1(a_1-a_0)=b_1$, the rest of the terms in $f(x)$ become $0$ because of $(a_1-a_1)=0$ is a factor in each of them.  By rearranging, we can get that $c_1=\frac{b_1-b_0}{a_1-a_0}$. 
+    
+            - This forms the start of a recursive relationship, where:
+    
+        - It is easy to see how to find the unique values for $d_0,\ldots,d_n$ for which $f(x)$ has the required property.  (Supply detail.)  
+    
         - **Uniqueness** - It suffices to prove that if $f(a_i)=0$ for all $i$, where $f(x)$ has degree at most $n$, then $f$ is the zero polynomial.
-
+    
             So suppose that $f(x)$ has this vanishing property, and that $f(x)$ has degree $m\le n$.  If $m=0$ then $f(x)$ is constant, and this constant must be zero, as required
-
+    
             So suppose that $m>0$, and let $f(x)=(x-a_n)g(x)+c$ where $g(x)$ has degree $m-1<n$.  Clearly $c=0$, and $g(a_i)=0$ for $0\le i\le n-1$.  By induction on $n$ it follows that $g$ is the zero polynomial, as required. 
-
+    
             Q.E.D.
-
+    
     - Using this representation for multiplication, say polynomial $A(x)$ and $B(x)$ both have degree $d$. Then, their product $C(x)$ must have degree $d^2$, so it can be described by $d^2+1$ unique points.
+    
     - We can simply choose any $d^2+1$ values of $x$, evaluate $A(x_i)$ and $B(x_i)$ at these values, and multiply them together to get $A(x_i)\cdot B(x_i)= C(x_i)$. Then, we have $d^2+1$ points in the form $\{(x_0,C(x_0)),...,(x_{d^2}, C(x_{d^2}))\}$, which represents our polynomial product. 
+    
     - The complexity of this algorithm is only $O(d)$, therefore it is more efficient than distributive multiplication.
 
 ### Problems converting between coefficients and values
@@ -123,3 +142,4 @@ $n$th roots of unity are all the complex numbers given on the complex plane when
 ### Evaluation Algorithm
 
 ### Interpolation Algorithm
+
