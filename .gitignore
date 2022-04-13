@@ -1,3 +1,9 @@
 /.idea
-/venv
+/FFT Code/venv
+/FFT Code/.idea
+/FFT Code/.ipynb_checkpoints
+/FFT Code/__pychache__
+/FFT Code/0_scratch.py
+*.pyc
 *.xml
+
