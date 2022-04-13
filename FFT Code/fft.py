@@ -15,10 +15,10 @@ def partition_by_parity(P: list[int]):
 
 
 def FFT(P: list[int]):
-    """Convert a list of n numbers, P,
-    that represents the coefficients of a polynomial,
-    to a point-value representation, using the FFT.
-    Return a list of n complex numbers."""
+    """
+    Return the DFT of a list of complex numbers, P.
+    This algorithms has O(nlogn) time complexity.
+    """
 
     n = len(P)
 
@@ -47,4 +47,7 @@ def FFT(P: list[int]):
     return y
 
 
-print(FFT([1, 2, 3, 4]))
+if __name__ == '__main__':
+    A_coeff = A = [2, 3, 7] #[1,2,3,4]
+    A_val = FFT(A_coeff)
+    print(A_val)
