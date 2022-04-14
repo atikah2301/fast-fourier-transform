@@ -1,8 +1,44 @@
 # Fast Fourier Transform - Initial Research
 
-[Video Link](https://www.youtube.com/watch?v=h7apO7q16V0)
+## Links and References
 
-## Introduction:
+[Long Video Link](https://www.youtube.com/watch?v=h7apO7q16V0)
+
+[Exponential Form with C++ code](https://www.youtube.com/watch?v=htCj9exbGo0)
+
+[MIT Divide & Conquer, FFT](https://www.youtube.com/watch?v=iTMn0Kt18tg)
+
+[MIT "Design and Analysis of Algorithms" Course page](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/)
+
+Erik Demaine, Srini Devadas, and Nancy Lynch. *6.046J Design and Analysis of Algorithms.* Spring 2015. Massachusetts Institute of Technology: MIT OpenCourseWare, [https://ocw.mit.edu](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015). License: [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+## Checklist
+
+- [x] Define FFT and DFT
+- [x] Understand Coefficient vs Value representation
+    - [ ] Proof that n distinct points uniquely determine a polynomial of degree n-1
+        - [ ] Matrix / linear algebraic proof using Vandermonde matrix
+        - [ ] Uniqueness & Existence proof by Prof CLG
+- [x] Understanding time complexity of FFT and naive algorithms
+- [ ] Understanding properties of complex numbers
+    - [x] Representations of complex numbers
+        - [x] Polar
+        - [x] Trigonometric
+        - [x] Exponential
+    - [ ] Roots of unity
+- [ ] Best way of selecting x_k terms for value rep
+- [x] Understanding the recursion by splitting polynomials into even and odd numbered coefficients
+- [x] Divide & Conquer approach
+- [ ] Inverse of FFT
+- [x] FFT, Multiply, IFFT
+- [ ] At what value of n does FFT method become faster than naive multiplication?
+- [ ] Give an example of the recursion
+- [ ] Give an example of running the FFT
+- [ ] Give an example of running the IFFT
+
+
+
+## Introduction
 
 FFT has many applications in modern technology (e.g. GPS, wireless, signal processing)
 
@@ -27,10 +63,7 @@ Two polynomials, $A(x)$ and $B(x)$, and we want to find $C(x)=A(x)\cdot B(x)$
 
 - **Coefficient representation**:
     - Arrange the coefficients of the polynomial in some data structure, such as an array, matrix etc.
-    
-    - E.g. $A(x)=2+3x+x^2+3x^4$ could be `A = [2,3,1,0,3]`. 
     - We go in the reverse order of how a polynomial is naturally written since this allows our array's i-th index to match the i-th degree coefficient. So, we know that `C[4]` refers to $kx^4$
-    
     - Multiplying 2 polynomials of degree $d$ using the distributive property has a run time of $O(d^2)$ since we are multiplying $d+1$ terms in the first polynomial by $d+1$ terms in the second, giving $O(d^2+2d+1)=O(d^2)$
     - Can we do better?
     
@@ -137,9 +170,141 @@ Complex numbers can be represented in 3 forms:
 
 $n$th roots of unity are all the complex numbers given on the complex plane when taking the argument to be $\frac{2\pi}{n}$.
 
+Note that taking a root of unity to some power, $k$, is equivalent to multiplying its argument by $k$, which effectively moves the point along the unit circle on the complex plane. So, $(e^{i\theta})^k=e^{ik\theta}$. So if you square a root of unity, and it had argument $\theta=\frac{\pi}{4}$, which is a one-eighth turn, it becomes $\theta = \frac{\pi}{2}$ which is a quarter turn.
+
+Due to the periodicity of roots of unity, since they quite literally go around in a circle.
+
 
 
 ### Evaluation Algorithm
 
+- Going from coefficient rep to value rep is essentially evaluating P(x) with degree n at n+1 points.
+- So we call Coefficient => Value FFT the "evaluation algorithm"
+- Consider evaluating P(x), a degree 7 polynomial, at 8 points, x = {1,2,3,4,5,6,7,8}. 
+- Using Horner's rule, we can evaluate a polynomial at 1 value of x to get y in O(n), so doing this for all n+1 points would mean getting the value rep in O(n^2) time
+- However, if we chose x = (-1, 1, -2, 2, -3, 3, -4, 4), then for odd or even functions, which have symmetry, we can perform half as many evaluations, and simply get the remaining evaluations either for free (if even symmetry) or at the low-cost of just multiplying by -1 (if odd symmetry)
+- Let's extend this to general polynomials
+
+Divide and conquer:
+
+- Split a polynomial into odd and even numbered coefficients, and create two new polynomials of degree n/2
+- 
+
 ### Interpolation Algorithm
+
+
+
+
+
+
+
+### Radix-2 FFT Algorithm
+
+- Two  types DIT and DIF (decimation in time and frequency)
+- Both are divide and conquer algorithms
+- Choose the polynomial length N such that it can be factored as r_1, r_2, .. 2_m
+- And if all the radixes are the same, then N=r^m 
+- The most practical choice of r=2, hence radix-2, so, N=2^m
+- N-point DFT can be broken into 2 DFTs of length N/2, etc.
+- To do this, we need a few properties of polynomials
+    - Symmetry of roots of unity: $\omega_N^{k+\frac{n}{2}}=-\omega_N^k$
+    - Periodicity: $\omega_N^{k+N}=\omega_N^{k}$
+    - $\omega_N^2 = \omega_{N/2}$
+
+- Let x(n) be a polynomial of degree N and 
+
+
+
+
+
+# MIT Lecture Notes
+
+## Polynomial Operations & Time Complexity
+
+Evaluation:
+
+Naive method:
+
+- Multiply coefficients by x^k and add them - constant time
+- Carry out the exponentiation - quadratic time, since exponentiation is at most n multiplications carried out for n different terms
+- So, naive evaluation is O(n^2)
+
+Horner's rule:
+
+- Factor out x from the first n-1 terms, then from the first n-2 terms, etc. 
+- This is ultimately 1st coefficient * x + 2nd coefficient, all times by x, and add the 3rd coefficient, all times by x and add the 4th etc.
+- So you only do 2 constant time operations for each of the n terms
+- So that's O(n), which is highly efficient  
+
+Why do we care about polynomial multiplication? It is similar to a widely used operation on vectors - convolution.
+
+You can smooth waveform functions through multiplication with another function, or do a transformation of a vector my multiplying with a matrix.
+
+Since coefficient rep is O(n) for for evaluation and addition but O(n^2) for multiplication, and value rep is O(n) for addition and multiplication but O(n^2) for evaluation (?), neither is perfect.
+
+DFT is the transformation from coefficient rep to value rep, but FFT is the fast algorithm for doing so.
+
+Vandermonde matrix formula represents the multiplication of samples for evaluation as an nxn matrix of all x^k evaluated as all samples of x, multiplied by a column vector of coefficients, to get a column vector of y values. This is multiplication using value rep in O(n^2)
+
+To get back to coefficient rep from Vandermonde, we could use Gaussian elimination to get the inverse of the square matrix and multiply it by the column vector on the right hand side, but this is O(n^3). Finding the inverse the "normal" way (through computing the determinant etc) is O(n^2). This is bad, because we lose the benefit of having an O(n) time multiplication method via value rep if it costs O(n) or more to convert first.
+
+### Divide and Conquer
+
+1. Divide
+
+Divide the coefficient rep of the polynomial into odd and even numbered coefficients, so {a0, a2, a4,..} and {a1, a3, a5...} which are themselves polynomials with x^0, x^1, x^2, terms etc.
+
+Time complexity - iterating over the coefficients and performing the basic operation of storing them in new vectors has complexity O(n)
+
+2. Conquer 
+
+Recursively compute A_even(w) and A_odd(w) for al w which are each of the x values squared.
+
+3. Combine 
+
+$A(x) = A_{even}(x^2) + xA_{odd}(x^2)$
+
+Time complexity - If we know each term, then this is constant time since its just 3 basic operations.
+
+
+
+EXAMPLE:
+
+- Start with a polynomial of degree n-1 with n terms. Let n be a power of 2. In this case, n=8
+- $A(x) = (5,6,2,4,7,3,1,8)$ 
+- Split into $A_e(w)=(6,4,3,8)$ and $A_o(w)=(5,2,7,1)$
+- Split further into $A_{ee}=(4,8)$, $A_{eo}=(6,3)$ and $A_{oe}=(2,1)$, $A_{oe}=(5,7)$
+- $A(x)=(0,6,0,4,0,3,0,8) + (5,0,2,0,7,0,1)$
+
+Although the problem is being broken up into smaller parts, the combined sum of these parts is the same as what we originally had, which isn't really an improvement. We know this because there are $\log_2(n)$ recursions, which leave us with $2^{\log_2(n)}$ coefficients to  work with in the final recursive step, which is just $n$. If we consider how the splitting of the polynomial takes $n$ basic operations at most, then this whole process is still $O(n^2)$
+
+If we can find a way to make the recursion reduce the computations needed, then divide and conquer would be worth pursuing. 
+
+We can take inspiration from merge sort, which is a recursive algorithm whose time complexity is expressed as $T(n)=2T(\frac{n}{2})+O(n)$ which evaluates to $O(n\log(n))$. This comes from the fact there are $log_2(n)$ recursive steps since we are halving the data set at each step, and it takes $n$ steps to deal with each recursion
+
+If we choose our initial values of $x$ carefully before we begin computations, we will be able to reuse some computations and only do half as much. 
+
+One way of doing this is by using roots of unity.
+
+### Overview
+
+Let A and B be vectors for polynomials in coefficient rep. We can compute the polynomials in value rep by running the FFT on each of them, giving A* and B*.
+
+Then, the dot product of these two vectors (the sum of the element-wise products) is C*, the value rep of the product of the two polynomials.
+
+To convert C* to C, its coefficient rep, we need an inverse for the FFT. 
+
+### Inverse FFT
+
+Consider the Vandermonde matrix formula, X.A=Y. Y is the value rep, A is the coefficient rep. So, A=Y.X^-1
+
+But what is the inverse of the Vandermonde matrix, X?
+
+Claim = X^-1 = Conjugate(X)/n
+
+The complex conjugate is just the reciprocal of the exponential form of a complex number, i.e. the negative of the argument.
+
+Proof of claim:
+
+Consider p= X * Conjugate(X) = nI i.e. n times identity matrix
 

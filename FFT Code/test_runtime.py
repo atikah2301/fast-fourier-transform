@@ -1,10 +1,8 @@
-from time import time
-from random import randint
-from tabulate import tabulate
-
+from header import *
+from naive_multiplication import naive_multiplication
 
 def test_timing(f):
-    n = [10, 100, 1000, 10000]
+    n = [10, 100, 1000]
     times = []
 
     for i in range(len(n)):
@@ -21,7 +19,8 @@ def test_timing(f):
     print(tabulate(table, headers="keys"))
 
 
-test_timing(naive_multiplication)
+if __name__ == '__main__':
+    test_timing(naive_multiplication)
 
 # from n=100 to n=1000, x10 more data resulted in x16 runtime
 # from n=1000 to n=10,000, x10 more data resulted in x100 runtime
