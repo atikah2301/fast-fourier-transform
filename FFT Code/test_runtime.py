@@ -1,5 +1,5 @@
 from header import *
-from naive_multiplication import naive_multiplication
+from naive_polynomial_multiplication import naive_multiplication
 
 def test_timing(f):
     n = [10, 100, 1000]
