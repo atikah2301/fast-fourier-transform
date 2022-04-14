@@ -9,7 +9,7 @@ def FFT_multiplication(A_coeff, B_coeff):
     # Step 2 - Multiplying
     C_val = multiply_values(A_val, B_val)
     # # Step 3 - Interpolation
-    C_coeff = IFFT(C_vals)
+    C_coeff = IFFT(C_val)
 
     return C_coeff
 
