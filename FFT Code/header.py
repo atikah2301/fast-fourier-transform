@@ -1,5 +1,5 @@
 # fft.py, ifft.py, dft.py
-from math import cos, sin, pi, exp
+from math import cos, sin, pi, exp, log, ceil
 
 # test_runtime.py
 from time import time
