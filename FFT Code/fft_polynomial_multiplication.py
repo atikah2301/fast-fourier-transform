@@ -1,4 +1,5 @@
 from fft import FFT
+from inverse_fft import IFFT
 from multiply_values import multiply_values
 
 def FFT_multiplication(A_coeff, B_coeff):
@@ -7,12 +8,10 @@ def FFT_multiplication(A_coeff, B_coeff):
     B_val = FFT(B_coeff)
     # Step 2 - Multiplying
     C_val = multiply_values(A_val, B_val)
-    return C_val
-
     # # Step 3 - Interpolation
-    # C_coeff = inv_FFT(C_vals)
-    #
-    # return C_coeff
+    C_coeff = IFFT(C_vals)
+
+    return C_coeff
 
 if __name__ == '__main__':
     A = [2, 3, 7]
