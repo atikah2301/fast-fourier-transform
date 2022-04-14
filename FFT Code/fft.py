@@ -7,6 +7,17 @@ def rect_form(theta, r=1, is_rounded=True, decimal_places=15):
         r * cos(theta), r * sin(theta)
 
 
+def padding(P):
+    """
+    Add 0s to the front of an array of coefficients to reach an array length that is a power of 2.
+    """
+    N = len(P)
+    next_pow_2 = pow(2, ceil(log(N) / log(2)))
+    padding = next_pow_2 - N
+    padded_polynomial = ([0] * padding) + P
+    return padded_polynomial
+
+
 def FFT(P):
     """
     Return the DFT of a list of complex numbers, P.
@@ -14,11 +25,6 @@ def FFT(P):
     """
 
     N = len(P)
-
-    # Check if the number of terms in the polynomial is a power of 2
-    if N & (N-1) != 0:
-        return
-        # need to pad the polynomial up
 
     # Base case: recursion stops when the polynomial is split into individual terms
     if N == 1:
@@ -46,6 +52,11 @@ def FFT(P):
 
 
 if __name__ == '__main__':
-    A_coeff = A = [2, 3, 7, 8] #[1,2,3,4]
+    A_coeff = A = [2, 3, 7] #[1,2,3,4]
+    # Check if the number of terms in the polynomial is a power of 2
+    # Using a trick involving the bitwise AND binary operator
+    N = len(A_coeff)
+    if N & (N-1) != 0:
+        A_coeff = padding(A_coeff)
     A_val = FFT(A_coeff)
     print(A_val)
