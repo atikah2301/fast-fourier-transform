@@ -16,7 +16,7 @@ def IFFT(P):
     N = len(P)
 
     # Check if the number of terms in the polynomial is a power of 2
-    if N & (N-1) != 0:
+    if N > 0 and N & (N-1) != 0:
         return
         # need to pad the polynomial up
 
