@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # Check if the number of terms in the polynomial is a power of 2
     # Using a trick involving the bitwise AND binary operator
     N = len(A_coeff)
-    if N & (N-1) != 0:
+    if N > 0 and N & (N-1) != 0:
         A_coeff = padding(A_coeff)
     A_val = FFT(A_coeff)
     print(A_val)
