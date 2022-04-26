@@ -18,12 +18,7 @@ def padding(P):
     return padded_polynomial
 
 
-def FFT(P):
-    """
-    Return the DFT of a list of complex numbers, P.
-    This algorithms has O(nlogn) time complexity.
-    """
-
+def FFT_recursion(P):
     N = len(P)
 
     # Base case: recursion stops when the polynomial is split into individual terms
@@ -38,25 +33,40 @@ def FFT(P):
     P_even, P_odd = P[0::2], P[1::2]
 
     # Recursive call to keep splitting the polynomial in half
-    V_even, V_odd = FFT(P_even), FFT(P_odd)
+    V_even, V_odd = FFT_recursion(P_even), FFT_recursion(P_odd)
 
     # Create a empty array to store the polynomial's values in
     value_rep = [0] * N
 
     # Calculate values in half the expected time by exploiting symmetries
-    for n in range(N//2):
+    for n in range(N // 2):
         value_rep[n] = V_even[n] + (w ** n) * V_odd[n]
-        value_rep[n + N//2] = V_even[n] - (w ** n) * V_odd[n]
+        value_rep[n + N // 2] = V_even[n] - (w ** n) * V_odd[n]
 
     return value_rep
 
 
-if __name__ == '__main__':
-    A_coeff = A = [2, 3, 7] #[1,2,3,4]
-    # Check if the number of terms in the polynomial is a power of 2
-    # Using a trick involving the bitwise AND binary operator
+def is_not_power_of_2(N):
+    return True if N <= 0 or N & (N - 1) != 0 else False
+
+
+def FFT(P):
+    """
+    Prepare the argument to pass to the FFT_recursion function.
+    """
+    # Create a deep copy of the argument to not alter it
+    A_coeff = [coeff for coeff in P]
     N = len(A_coeff)
-    if N > 0 and N & (N-1) != 0:
+    # Use a bitwise AND operation to test if the array length is a power of 2
+    if is_not_power_of_2(N):
         A_coeff = padding(A_coeff)
+    A_val = FFT_recursion(A_coeff)
+
+    return A_val
+
+
+if __name__ == '__main__':
+    A_coeff = [2, 3, 7] #[1,2,3,4]
     A_val = FFT(A_coeff)
     print(A_val)
+    print(A_coeff)
