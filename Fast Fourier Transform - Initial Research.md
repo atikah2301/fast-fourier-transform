@@ -119,11 +119,11 @@ Two polynomials, $A(x)$ and $B(x)$, and we want to find $C(x)=A(x)\cdot B(x)$
 
 ### Choosing $x$ values for faster conversion
 
-- Converting from coefficient representation to value representation could be made much faster if we could somehow use fewer than $d+1$ unique $x$ values to find all our points. Let $n=d+1$ be the number of points in the value representation of a polynomial.
+- Converting from coefficient representation to value representation could be made much faster if we could somehow use fewer than $d+1$ unique $x$ values to find all our points. Let $n \geq d+1$ be the number of points in the value representation of a polynomial.
 - This is possible if we choose our $x$ values to exploit the symmetries that exist in polynomials. 
     - All single-term polynomials of even degree (i.e. $x^2,\,x^4,..$) are even functions, with symmetry $P(-x)=P(x)$
     - All single-term polynomials of odd degree (i.e. $x^3,\,x^5,..$) are odd functions, with symmetry $P(-x)=-P(x)$
-    - So for these polynomials, we only need at least half as many $x$ values to be able to represent a polynomial. We simply use the symmetry to evaluate $P(-x)$ virtually instantly.
+    - So for these polynomials, we only need at least half as many $x$ values to be able to represent a polynomial. We simply use the symmetry to evaluate $P(-x)$ in $O(1)$ time.
 - Generalising this, we can try splitting up any polynomial into its even degree and odd degree terms, then factorise $x$ from the odd degree terms to get an expression with only even degree terms, e.g. 
     - $P(x)=3x^5+2x^4+x^3+7x^2+4x+8$
     - $P(x)=(2x^4+7x^2+8)+(3x^5+x^3+4x)$
@@ -308,3 +308,8 @@ Proof of claim:
 
 Consider p= X * Conjugate(X) = nI i.e. n times identity matrix
 
+
+
+EXAMPLE : Using recursive splitting of polynomials to evaluate at positive-negative pairs of x_k values
+
+$P(x)=x^3+x^2-x-1$
