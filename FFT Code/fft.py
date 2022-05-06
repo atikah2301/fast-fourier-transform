@@ -1,4 +1,6 @@
 from header import *
+from rounding import *
+
 
 def rect_form(theta, r=1, is_rounded=True, decimal_places=15):
     if is_rounded == True:
@@ -68,5 +70,4 @@ def FFT(P):
 if __name__ == '__main__':
     A_coeff = [2, 3, 7] #[1,2,3,4]
     A_val = FFT(A_coeff)
-    print(A_val)
-    print(A_coeff)
+    print(round_nums(A_val))
