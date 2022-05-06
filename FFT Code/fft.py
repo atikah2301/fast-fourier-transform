@@ -28,7 +28,7 @@ def FFT_recursion(P):
         return P
 
     # Define the first of the Nth roots of unity
-    a, b = rect_form(2 * pi / N)
+    a, b = rect_form(2 * pi / N) # Takes the angle as argument
     w = complex(a, b)
 
     # Partition the polynomial by the parity of each term's position
@@ -42,6 +42,8 @@ def FFT_recursion(P):
 
     # Calculate values in half the expected time by exploiting symmetries
     for n in range(N // 2):
+        # print(value_rep)
+        # print(n)
         value_rep[n] = V_even[n] + (w ** n) * V_odd[n]
         value_rep[n + N // 2] = V_even[n] - (w ** n) * V_odd[n]
 
