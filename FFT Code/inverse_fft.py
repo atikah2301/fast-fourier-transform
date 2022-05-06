@@ -54,7 +54,7 @@ def IFFT(P):
     # Divide each resulting coefficient value by N
     A_coeff = [c / len(A_coeff) for c in A_coeff]
 
-    return A_coeff
+    return A_coeff[::-1]
 
 if __name__ == '__main__':
     A_val = [(20+0j), (-5-5j), (-2+0j), (-5+5j)] # [2, 3, 7, 8]
