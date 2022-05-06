@@ -4,6 +4,12 @@
 /FFT Code/.ipynb_checkpoints
 /FFT Code/__pychache__
 /FFT Code/0_scratch.py
+
+/FFT_Code_CLion/.idea
+/FFT_Code_CLion/cmake-build-debug/
+/FFT_Code_CLion/CMakeLists.txt
+
 *.pyc
 *.xml
+*.json
 
