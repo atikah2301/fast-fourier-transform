@@ -59,7 +59,7 @@ def FFT(P):
     Prepare the argument to pass to the FFT_recursion function.
     """
     # Create a deep copy of the argument to not alter it
-    A_coeff = [coeff for coeff in P]
+    A_coeff = [coeff for coeff in P][::-1]
     N = len(A_coeff)
     # Use a bitwise AND operation to test if the array length is a power of 2
     if is_not_power_of_2(N):
