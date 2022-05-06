@@ -1,4 +1,4 @@
-def naive_multiplication(A: list[int], B: list[int]):
+def naive_multiplication(A, B):
     # Lengths & degrees of A(x) and B(x)
     n_A = len(A)
     n_B = len(B)
