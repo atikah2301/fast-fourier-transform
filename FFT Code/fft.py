@@ -70,6 +70,6 @@ def FFT(P):
 
 
 if __name__ == '__main__':
-    A_coeff = [2, 3, 7] #[1,2,3,4]
+    A_coeff = [6, 4, 2, 3, 7j] # Gets padded and becomes [0, 2, 3, 7j]
     A_val = FFT(A_coeff)
     print(round_nums(A_val))
