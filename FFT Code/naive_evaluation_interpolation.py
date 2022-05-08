@@ -15,6 +15,19 @@ def naive_polynomial_evaluation(P, X):
             Y[i] += P[j] * pow(X[i], len(P)-1-j)
     return Y
 
+def horners_rule(A, x):
+    n = len(A)
+    y = A[0]
+    for i in range(n-1):
+        y = A[i+1] + x*y
+    return y
+
+def horners_polynomial_evaluation(A, X):
+    Y = []
+    for x in X:
+        Y.append(horners_rule(A, x))
+    return Y
+
 def lagrange_polynomial(X, i):
     X_ = X[:i] + X[i+1:] # all of X except X[i]
 
@@ -52,6 +65,7 @@ if __name__ == '__main__':
     P1 = [1, 0, 1]
     P2 = [3, 4]
     X = [0, 1, 2, 3]
+    Y0 = horners_polynomial_evaluation(P2, X)
     Y1 = naive_polynomial_evaluation(P1, X)
     Y2 = naive_polynomial_evaluation(P2, X)
     Y3 = multiply_values(Y1, Y2)
@@ -60,8 +74,8 @@ if __name__ == '__main__':
 
     print(f"P1(X) = {Y1}")
     print(f"P2(X) = {Y2}")
+    print(f"Honer's Rulee: {Y0}")
     print(f"P1(X)*P2(X) = {Y3}")
     print(f"P3 = {round_nums(P3)}")
     print(f"Expected = {expected}")
     print(f"P3 as expected? {round_nums(P3) == expected}")
-
