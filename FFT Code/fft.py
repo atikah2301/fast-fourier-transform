@@ -21,6 +21,10 @@ def padding(P):
 
 
 def FFT_recursion(P):
+    """
+    Get values from coefficients of a polynomial.
+    This algorithms has O(nlogn) time complexity.
+    """
     N = len(P)
 
     # Base case: recursion stops when the polynomial is split into individual terms
@@ -58,7 +62,7 @@ def FFT(P):
     """
     Prepare the argument to pass to the FFT_recursion function.
     """
-    # Create a deep copy of the argument to not alter it
+    # Create a copy of the argument to not alter it
     A_coeff = [coeff for coeff in P][::-1]
     N = len(A_coeff)
     # Use a bitwise AND operation to test if the array length is a power of 2
