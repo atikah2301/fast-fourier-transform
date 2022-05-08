@@ -9,10 +9,9 @@ def rect_form(theta, r=1, is_rounded=True, decimal_places=15):
 
 def IFFT_recursion(P):
     """
-    Return the inverse DFT of a list of complex numbers, P.
+    Get coefficients from values of a polynomial.
     This algorithms has O(nlogn) time complexity.
     """
-
     N = len(P)
 
     # Check if the number of terms in the polynomial is a power of 2
@@ -26,7 +25,7 @@ def IFFT_recursion(P):
 
     # Define the first of the Nth roots of unity
     a, b = rect_form(2 * pi / N)
-    w = -complex(a, b)
+    w = complex(a, -b)
 
     # Partition the polynomial by the parity of each term's position
     P_even, P_odd = P[0::2], P[1::2]
