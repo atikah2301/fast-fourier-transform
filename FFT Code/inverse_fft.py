@@ -32,9 +32,9 @@ def IFFT_recursion(P):
     coeff_rep = [0] * N
 
     # Calculate values in half the expected time by exploiting symmetries
-    for n in range(N // 2):
-        coeff_rep[n] = V_even[n] + (w ** n) * V_odd[n]
-        coeff_rep[n + N // 2] = V_even[n] - (w ** n) * V_odd[n]
+    for k in range(N // 2):
+        coeff_rep[k] = V_even[k] + W[k] * V_odd[k]
+        coeff_rep[k + N // 2] = V_even[k] - W[k] * V_odd[k]
 
     return coeff_rep
 
