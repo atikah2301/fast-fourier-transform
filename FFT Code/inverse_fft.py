@@ -1,10 +1,5 @@
-from header import *
-
-def rect_form(theta, r=1, is_rounded=True, decimal_places=15):
-    if is_rounded == True:
-        return round(r * cos(theta), decimal_places), round(r * sin(theta), decimal_places)
-    else:
-        r * cos(theta), r * sin(theta)
+from shared_imports import *
+from shared_functions import rect_form
 
 
 def IFFT_recursion(P):
