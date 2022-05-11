@@ -51,7 +51,7 @@ def IFFT(P):
     return A_coeff[::-1]
 
 if __name__ == '__main__':
-    A_val = [(20+0j), (-5-5j), (-2+0j), (-5+5j)] # [2, 3, 7, 8]
+    A_val = [(20+0j), (-5-5j), (-2+0j), (-5+5j)]
     A_coeff = IFFT(A_val)
-    print(A_coeff)
+    print(A_coeff)  # should return [2, 3, 7, 8]
     print(A_val)
