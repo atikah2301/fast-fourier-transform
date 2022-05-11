@@ -30,6 +30,25 @@ def test_timing(f):
 
     return timings, n, k
 
+def save_data_to_csv(function, label, data):
+    """function: used to get the name of the test function as the title of the file,
+    label: string to specify which algorithm the data is from,
+    data: a 2D array of all the output from the testing
+    This function will parse data and save it to a text file in CSV format. """
+
+    unique_stamp = dt.now().strftime('%H%M%S%f') # so each run of the test has its own file
+    file_name = f"{function.__name__}_{label}_{unique_stamp}"
+    file_path = "Output/" + file_name + ".txt"
+    with open(file_path, 'w+') as f:
+        for i in range(len(data)): # each row
+            for j in range(len(data[0])):  # each column
+                f.write(f"{data[i][j]}") # record each piece of data
+                if j != len(data[0]) - 1: # no comma on end of line
+                    f.write(",")
+            f.write("\n") # new line for each test iteration's data
+        print(f"Successfully saved data to {file_path}")
+
+
 if __name__ == '__main__':
     test_timing(naive_multiplication)
     test_timing(FFT_multiplication())
