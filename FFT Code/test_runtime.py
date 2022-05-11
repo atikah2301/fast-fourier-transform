@@ -50,6 +50,7 @@ def save_data_to_csv(function, label, data):
 
 
 if __name__ == '__main__':
-    test_timing(naive_multiplication)
-    test_timing(FFT_multiplication())
+    t_naive, n, k = test_timing(naive_multiplication)
+    t_fft, n, k = test_timing(FFT_multiplication)
+    save_data_to_csv(test_timing, "naive", [k, n, t_naive, t_fft])
 
