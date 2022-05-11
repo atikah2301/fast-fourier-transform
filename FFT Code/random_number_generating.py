@@ -1,10 +1,11 @@
-import numpy as np
-from numpy.random import random_sample as np_rand
+from shared_imports import *
 from fft import FFT
 from inverse_fft import IFFT
 
 
 def random_polynomial(n=1, min=-1000, max=1000, is_complex=False):
+    """n, min, max: int, is_complex: bool to define the polynomial over real or or complex values
+    Generate a random polynomial with coefficients within the specified bounds."""
     diff = max - min
     if is_complex == True:
         return [complex(min + np_rand() * diff, min + np_rand() * diff) for _ in range(n)]
