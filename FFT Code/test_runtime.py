@@ -1,4 +1,4 @@
-from header import *
+from shared_imports import *
 from naive_polynomial_multiplication import naive_multiplication
 from fft_polynomial_multiplication import FFT_multiplication
 
@@ -24,5 +24,3 @@ if __name__ == '__main__':
     test_timing(naive_multiplication)
     test_timing(FFT_multiplication())
 
-# from n=100 to n=1000, x10 more data resulted in x16 runtime
-# from n=1000 to n=10,000, x10 more data resulted in x100 runtime
