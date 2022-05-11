@@ -1,30 +1,12 @@
-from header import *
+from shared_imports import *
 from rounding import *
-
-
-def rect_form(theta, r=1, is_rounded=True, decimal_places=15):
-    if is_rounded == True:
-        return round(r * cos(theta), decimal_places), round(r * sin(theta), decimal_places)
-    else:
-        r * cos(theta), r * sin(theta)
-
-
-def padding(P):
-    """
-    Add 0s to the front of an array of coefficients to reach an array length that is a power of 2.
-    """
-    N = len(P)
-    next_pow_2 = pow(2, ceil(log(N) / log(2)))
-    padding = next_pow_2 - N
-    padded_polynomial = ([0] * padding) + P
-    return padded_polynomial
-
+from shared_functions import is_not_power_of_2, padding, rect_form
 
 def FFT_recursion(P):
-    """
+    """P: array of complex values
     Get values from coefficients of a polynomial.
-    This algorithms has O(nlogn) time complexity.
-    """
+    This algorithms has O(nlogn) time complexity."""
+
     N = len(P)
 
     # Base case: recursion stops when the polynomial is split into individual terms
@@ -34,6 +16,7 @@ def FFT_recursion(P):
     # Define the first of the Nth roots of unity
     a, b = rect_form(2 * pi / N) # Takes the angle as argument
     w = complex(a, b)
+    W = [w**k for k in range(N // 2)]  # Store the first n/2 n-th roots of untiy
 
     # Partition the polynomial by the parity of each term's position
     P_even, P_odd = P[0::2], P[1::2]
@@ -45,17 +28,12 @@ def FFT_recursion(P):
     value_rep = [0] * N
 
     # Calculate values in half the expected time by exploiting symmetries
-    for n in range(N // 2):
-        # print(value_rep)
-        # print(n)
-        value_rep[n] = V_even[n] + (w ** n) * V_odd[n]
-        value_rep[n + N // 2] = V_even[n] - (w ** n) * V_odd[n]
+    for k in range(N // 2):
+        # print(f"n = {k}, w^n = {W[k]}")
+        value_rep[k] = V_even[k] + W[k] * V_odd[k]
+        value_rep[k + N // 2] = V_even[k] - W[k] * V_odd[k]
 
     return value_rep
-
-
-def is_not_power_of_2(N):
-    return True if N <= 0 or N & (N - 1) != 0 else False
 
 
 def FFT(P):
@@ -74,6 +52,7 @@ def FFT(P):
 
 
 if __name__ == '__main__':
-    A_coeff = [6, 4, 2, 3, 7j] # Gets padded and becomes [0, 2, 3, 7j]
+    A_coeff = [2, 3, 7, 8]
     A_val = FFT(A_coeff)
-    print(round_nums(A_val))
+    print(A_coeff)
+    print(A_val)  # should return [(20+0j), (-5-5j), (-2+0j), (-5+5j)]
