@@ -21,6 +21,7 @@ def IFFT_recursion(P):
     # Define the first of the Nth roots of unity
     a, b = rect_form(2 * pi / N)
     w = complex(a, -b)
+    W = [w ** k for k in range(N // 2)]  # Store the first n/2 n-th roots of untiy
 
     # Partition the polynomial by the parity of each term's position
     P_even, P_odd = P[0::2], P[1::2]
