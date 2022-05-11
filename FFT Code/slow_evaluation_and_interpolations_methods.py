@@ -16,6 +16,8 @@ def naive_polynomial_evaluation(P, X):
     return Y
 
 def horners_rule(A, x):
+    """Use horner's rule to evaluate a polynomial A once, on a number x.
+    Auxiliary function for horners_polynomial_evaluation function."""
     n = len(A)
     y = A[0]
     for i in range(n-1):
@@ -23,12 +25,15 @@ def horners_rule(A, x):
     return y
 
 def horners_polynomial_evaluation(A, X):
+    """Use horner's rule repeatedly to evaluate polynomial A, on an array of numbers X"""
     Y = []
     for x in X:
         Y.append(horners_rule(A, x))
     return Y
 
 def lagrange_polynomial(X, i):
+    """Calculate the i-th lagrange polynomial for a list of x values.
+    Auxiliary function for lagrangian_polynomial_interpolation function."""
     X_ = X[:i] + X[i+1:] # all of X except X[i]
 
     denominator = 1
@@ -72,10 +77,10 @@ if __name__ == '__main__':
     P3 = lagrangian_polynomial_interpolation(X, Y3)
     expected = naive_multiplication(P1, P2)
 
-    print(f"P1(X) = {Y1}")
-    print(f"P2(X) = {Y2}")
-    print(f"Honer's Rulee: {Y0}")
-    print(f"P1(X)*P2(X) = {Y3}")
-    print(f"P3 = {round_nums(P3)}")
-    print(f"Expected = {expected}")
+    print(f"P1 output = {Y1}")
+    print(f"P2 output = {Y2}")
+    print(f"Honer's Rule output: {Y0}") # [4, 7, 10, 13]
+    print(f"Product polynomial's value form  = {Y3}") # [4, 14, 50, 130], using element-wise multiplication
+    print(f"P3 = {round_nums(P3)}") # [3.0, 4.0, 3.0, 4.0] from lagrange interpolation
+    print(f"Expected = {expected}") # [3, 4, 3, 4], from multiplication in value form
     print(f"P3 as expected? {round_nums(P3) == expected}")
