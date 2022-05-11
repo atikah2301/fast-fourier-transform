@@ -4,6 +4,7 @@ from numpy import mean
 
 
 def test_forward_inversion(coeffs):
+    """Test if IFFT(FFT(P)) = P"""
     error = [abs(coeff_1 - coeff_2) for coeff_1, coeff_2 in zip(coeffs, IFFT(FFT(coeffs)))]
     print(f"Forward Inversion Error = {error}")
     if mean(error) < 0.001:
@@ -12,6 +13,7 @@ def test_forward_inversion(coeffs):
         print("Inversion Failed")
 
 def test_backward_inversion(values):
+    """Test if FFT(IFFT(P)) = P"""
     error = [abs(value_1 - value_2) for value_1, value_2 in zip(values, FFT(IFFT(values)))]
     print(f"Backward Inversion Error = {error}")
     if mean(error) < 0.001:
@@ -24,3 +26,9 @@ if __name__ == '__main__':
     values = [(20 + 0j), (-5 - 5j), (-2 + 0j), (-5 + 5j)]
     test_forward_inversion(coeffs)
     test_backward_inversion(values)
+
+    ## Output:
+    # Forward Inversion Error = [0.0, 0.0, 0.0, 0.0]
+    # Inversion Successful
+    # Backward Inversion Error = [0.0, 0.0, 0.0, 0.0]
+    # Inversion Successful
