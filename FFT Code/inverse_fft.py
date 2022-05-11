@@ -3,10 +3,10 @@ from shared_functions import rect_form
 
 
 def IFFT_recursion(P):
-    """
+    """P: array of complex values
     Get coefficients from values of a polynomial.
-    This algorithms has O(nlogn) time complexity.
-    """
+    This algorithms has O(nlogn) time complexity."""
+
     N = len(P)
 
     # Check if the number of terms in the polynomial is a power of 2
@@ -40,9 +40,9 @@ def IFFT_recursion(P):
 
 def IFFT(P):
     """
-    Final step after IFFT_recursion.
+    Final steps after IFFT_recursion.
     """
-    # Create a deep copy of the argument data
+    # Create a copy of the argument data
     A_val = [val for val in P]
     A_coeff = IFFT_recursion(A_val)
     # Divide each resulting coefficient value by N
