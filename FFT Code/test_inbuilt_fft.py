@@ -1,4 +1,4 @@
-from header import *
+from shared_imports import *
 from multiply_values import multiply_values
 
 def FFT_multiplication(A_coeff, B_coeff):
